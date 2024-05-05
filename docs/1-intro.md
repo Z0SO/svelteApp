@@ -2,113 +2,86 @@
 ---
 
 
+## Introducción a los componentes en Svelte
 
-## **Creando un componente en Svelte:**
+En Svelte, una aplicación está compuesta por uno o más componentes. Un componente es un bloque de código autónomo y reutilizable que encapsula HTML, CSS y JavaScript relacionados, y se escribe en un archivo con extensión `.svelte`. El archivo `App.svelte`, que se encuentra abierto en el editor de código a la derecha, es un ejemplo de un componente simple.
 
-Cuando creas un componente en Svelte, puedes usar la etiqueta `<script>` para incluir bloques de código JavaScript. Este código se ejecuta cuando se crea una instancia del componente y las variables declaradas en este bloque son visibles para el marcado del componente. Aquí hay algunas reglas importantes:
+**Agregar datos:**
 
-1. **Exportación crea un elemento:**
-   En Svelte, usamos la palabra clave `export` para marcar una variable como un atributo del componente, lo que significa que será accesible desde fuera del componente. Esto es útil para pasar datos al componente desde su contexto padre. Por ejemplo:
+Un componente que solo contiene marcado estático no es muy interesante. Vamos a agregar algunos datos.
 
-   ```html
-   <script>
-     export let foo;
+Primero, agregamos una etiqueta `<script>` a nuestro componente y declaramos una variable `name`:
 
-     // Los valores pasados como atributos son accesibles de inmediato
-     console.log({ foo });
-   </script>
-   ```
+```html
+<script>
+	let name = 'Svelte';
+</script>
 
-2. **Valor inicial predeterminado para los atributos:**
-   Puedes especificar un valor inicial predeterminado para un atributo. Este valor se utilizará si el consumidor del componente no proporciona un valor específico al instanciar el componente. Por ejemplo:
+<h1>Hello world!</h1>
+```
 
-   ```html
-   <script>
-     export let bar = 'valor inicial opcional';
-     export let baz = undefined;
-   </script>
-   ```
+Luego, podemos referirnos a `name` en el marcado:
 
-3. **Exportar constantes, clases y funciones:**
-   Si exportas una constante, clase o función, estas serán accesibles desde fuera del componente. Las funciones son valores de apoyo válidos y pueden ser útiles para acciones específicas del componente. Por ejemplo:
+```html
+<h1>Hello {name}!</h1>
+```
 
-   ```html
-   <script>
-     // estas son de solo lectura
-     export const thisIs = 'solo lectura';
+Dentro de los corchetes `{}`, podemos colocar cualquier JavaScript que deseemos. Intenta cambiar `name` a `name.toUpperCase()` para un saludo en mayúsculas.
 
-     /** @param {string} name */
-     export function greet(name) {
-       alert(`¡Hola ${name}!`);
-     }
-   </script>
-   ```
+```html
+<h1>Hello {name.toUpperCase()}!</h1>
+```
 
-4. **Acceso a atributos de lectura mediante la sintaxis `bind:this`:**
-   Puedes acceder a atributos de lectura como propiedades en el elemento del componente usando la sintaxis `bind:this`. Esto es útil para interactuar con el DOM del componente desde su contexto padre. Por ejemplo:
+Al igual que podemos usar corchetes para controlar el texto, también podemos usarlos para controlar los atributos de los elementos.
 
-   ```html
-   <script>
-     /** @type {string} */
-     let className;
+Nuestra imagen carece de un `src`. Añadamos uno:
 
-     // crea una propiedad `class`, aunque sea una palabra reservada
-     export { className as class };
-   </script>
-   ```
+```html
+<img src={src} />
+```
 
+Es mejor, pero si pasas el ratón sobre la `<img>` en el editor, Svelte nos advierte:
 
----
+"A11y: El elemento 'img' debe tener un atributo alt"
 
-## **Reactividad en Svelte:**
+Es importante asegurarse de que las aplicaciones web sean accesibles para la mayor cantidad de usuarios posible, incluidas personas con discapacidades visuales o motoras, o personas con conexiones a Internet lentas. La accesibilidad (abreviada como a11y) no siempre es fácil de lograr, pero Svelte te ayudará advirtiéndote si escribes un marcado inaccesible.
 
-En Svelte, las asignaciones son 'reactivas', lo que significa que cuando asignas un nuevo valor a una variable, esto desencadena automáticamente una actualización en el componente y provoca que se vuelva a renderizar.
+En este caso, nos falta el atributo `alt` que describe la imagen para personas que utilizan lectores de pantalla o que tienen conexiones a Internet lentas o limitadas. Añadamos uno:
 
-1. **Cambiar el estado del componente:**
-   Para cambiar el estado de un componente y desencadenar una re-renderización, simplemente asigna un nuevo valor a una variable localmente declarada. Por ejemplo:
+```html
+<img src={src} alt="Un hombre baila." />
+```
 
-   ```html
-   <script>
-     let count = 0;
+Podemos utilizar corchetes para enlazar variables dentro de atributos. Intenta cambiarlo a `alt="{name} dances."`. Recuerda declarar una variable `name` en el bloque `<script>`.
 
-     function handleClick() {
-       // al llamar a esta función se desencadena una actualización si el marcado referencia `count`
-       count = count + 1;
-     }
-   </script>
-   ```
+**Atributos de manera abreviada:**
 
-   Tanto la actualización de expresiones (`count += 1`) como la asignación directa (`count = newValue`) tienen el mismo efecto.
+No es raro tener un atributo donde el nombre y el valor son los mismos, como `src={src}`. Svelte nos proporciona una abreviatura conveniente para estos casos:
 
-2. **Actualización de arreglos:**
-   Sin embargo, los métodos de los arreglos, como `.push()` y `.splice()`, no activan automáticamente las actualizaciones. Después de modificar un arreglo con estos métodos, necesitas hacer una asignación posterior para activar la actualización. Por ejemplo:
-
-   ```html
-   <script>
-     let arr = [0, 1];
-
-     function handleClick() {
-       // esta llamada al método no desencadena una actualización
-       arr.push(2);
-       // esta asignación desencadenará una actualización si el marcado referencia `arr`
-       arr = arr;
-     }
-   </script>
-   ```
-
-3. **Asignaciones en bloques `<script>`:**
-   Los bloques `<script>` en Svelte se ejecutan solo cuando se crea el componente, por lo que las asignaciones dentro de estos bloques no se ejecutan automáticamente nuevamente cuando una variable cambia. Si deseas rastrear los cambios en una variable, necesitas asignarla explícitamente. Por ejemplo:
-
-   ```html
-   <script>
-     export let person;
-     // esto solo establecerá `name` en la creación del componente
-     // no se actualizará cuando `person` lo haga
-     let { name } = person;
-   </script>
-   ```
+```html
+<img {src} alt="{name} dances." />
+```
 
 ---
 
+**Agregando estilos a un componente en Svelte:**
+
+Al igual que en HTML, puedes agregar una etiqueta `<style>` a tu componente para aplicar estilos CSS. Veamos cómo agregar algunos estilos al elemento `<p>`:
+
+```html
+<p>This is a paragraph.</p>
+
+<style>
+	p {
+		color: goldenrod;
+		font-family: 'Comic Sans MS', cursive;
+		font-size: 2em;
+	}
+</style>
+```
+
+Es importante que estas reglas de estilo estén en el ámbito de aplicación del componente. Esto significa que no cambiarás accidentalmente el estilo de los elementos `<p>` en otras partes de tu aplicación. Svelte se encarga de asegurar que los estilos definidos en un componente se apliquen solo a ese componente específico.
 
 ---
+
+Con estos estilos, el elemento `<p>` dentro de tu componente ahora tendrá un color dorado (`goldenrod`), una fuente de texto de tipo 'Comic Sans MS' o una fuente similar, y un tamaño de fuente dos veces más grande que el tamaño predeterminado.

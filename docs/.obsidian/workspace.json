@@ -1,14 +1,14 @@
 {
   "main": {
-    "id": "c8596f9c2225a50a",
+    "id": "31edf373bc76ed91",
     "type": "split",
     "children": [
       {
-        "id": "7c64aca3bc22857d",
+        "id": "424e8c47ca4070b9",
         "type": "tabs",
         "children": [
           {
-            "id": "6b27c136c5b8fbf5",
+            "id": "50fedec4005840eb",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -25,15 +25,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "93f60fb2cd87e10b",
+    "id": "a9ac2ac43910bfda",
     "type": "split",
     "children": [
       {
-        "id": "d96c008e2840d102",
+        "id": "d0f2592d152c1526",
         "type": "tabs",
         "children": [
           {
-            "id": "1cdfb0f13c8cd1a3",
+            "id": "cb32c2d59f2e8f9a",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -43,7 +43,7 @@
             }
           },
           {
-            "id": "98268423b1ba15b2",
+            "id": "2b68a208584d0093",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -58,7 +58,7 @@
             }
           },
           {
-            "id": "fe391c4bdbd379ac",
+            "id": "b278a606130be130",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -72,15 +72,15 @@
     "width": 300
   },
   "right": {
-    "id": "909e1c46706253a5",
+    "id": "c2871b2940a0360a",
     "type": "split",
     "children": [
       {
-        "id": "f8cd0a0fa2e57691",
+        "id": "408f2bcef68bc43a",
         "type": "tabs",
         "children": [
           {
-            "id": "6b61701c0564789a",
+            "id": "8e9864223beaa54a",
             "type": "leaf",
             "state": {
               "type": "backlink",
@@ -97,7 +97,7 @@
             }
           },
           {
-            "id": "7ea70d8b99aa1d57",
+            "id": "47d96fd02319956f",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
@@ -109,7 +109,7 @@
             }
           },
           {
-            "id": "74144369e7dde637",
+            "id": "dfa11a1064e0796d",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -120,7 +120,7 @@
             }
           },
           {
-            "id": "7952a1a50f5be429",
+            "id": "ad4f1afcec655957",
             "type": "leaf",
             "state": {
               "type": "outline",
@@ -146,7 +146,7 @@
       "command-palette:Abrir paleta de comandos": false
     }
   },
-  "active": "6b27c136c5b8fbf5",
+  "active": "50fedec4005840eb",
   "lastOpenFiles": [
     "1-intro.md"
   ]
